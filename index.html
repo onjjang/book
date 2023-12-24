@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API book 연습</title>
+</head>
+
+<body>
+    <h1>API book 사이트</h1>
+    <input id="title" value="" type="text">
+    <button id="search">검색</button>
+    <p></p>
+    <script src="https://code.jquery.com/jquery-3.7.1.js"
+        integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+    <script>
+        // Find all of the objects that are paintings and have the word "rabbit" in the title
+        var apiEndpointBaseURL = "https://api.harvardartmuseums.org/object";
+        var queryString = $.param({
+            apikey: "5bdd2d13-6fdf-4349-a388-882c6a4665bc",
+            title: "rabbit",
+            classification: "Paintings"
+        });
+        $(document).ready(function () {
+            $("#search").click(function () {
+                $.getJSON(apiEndpointBaseURL + "?" + queryString, function (data) {
+                    console.log(data);
+                })
+                    .done(function (msg) {
+                        alert("Data Saved: " + msg);
+                        console.log(msg.records[0].title);
+                        console.log(msg.records[0].creditline);
+                        console.log(msg.records[0].dateoffirstpageview);
+                       $("p").append("<strong>" + msg.records[0].title + "</strong>");
+                       $("p").append("<strong>" + msg.records[0].creditline + "</strong>");
+                       $("p").append("<strong>" + msg.records[0].dateoffirstpageview + "</strong>");
+                    });
+            })
+        })
+    </script>
+</body>
+
+</html>
